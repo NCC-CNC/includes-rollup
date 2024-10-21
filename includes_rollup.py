@@ -59,7 +59,7 @@ print("... Merging CPCAD and NCC")
 m = arcpy.management.Merge([x, ncc], "{}/CPCAD_NCC_FS_CA_MERGE_HAS_OVERLAP".format(fgdb))
 
 # Dissolve for area calculations
-d = arcpy.management.Dissolve(m, "{}/CPCAD_NCC_FS_CA_DISSOLVED".format(fgdb), multi_part = "SINGLE_PART")
+d = arcpy.management.Dissolve(m, "{}/CPCAD_NCC_FS_CA_DISSOLVED".format(fgdb))
 
 # A FASTER APPROACH TO SELECT BY LOCATION? (I tried this approach for fun)------
 # Add new burn field
