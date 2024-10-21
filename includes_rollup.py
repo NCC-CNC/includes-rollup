@@ -35,14 +35,14 @@ snap = "C:/Data/PRZ/GRID1KM/NCC_1KM_IDX.tif"
 arcpy.env.overwriteOutput = True
 
 # Select and export filtered NCC layer
-arcpy.AddMessage("... Selecting fee simple + conservation agreements properties")
+print("... Selecting fee simple + conservation agreements properties")
 ncc_lyr = arcpy.MakeFeatureLayer_management(ncc, "ncc_lyr")
 where = "{} LIKE 'Fee Simple%' OR {} LIKE 'Conservation Agreement%'".format(prop_field, prop_field)
 x = arcpy.management.SelectLayerByAttribute(ncc, "NEW_SELECTION", where)
 ncc = arcpy.conversion.ExportFeatures(x, "{}/NCC_FS_CA".format(fgdb))
 
 # Project CPCAD
-arcpy.AddMessage("... Projecting CPCAD to Canada_Albers_WGS_1984")
+print("... Projecting CPCAD to Canada_Albers_WGS_1984")
 crs = arcpy.Describe(ncc).spatialReference
 cpcad = arcpy.Project_management(cpcad, "{}/CPCAD_PRJ".format(fgdb), crs)
 
@@ -55,7 +55,7 @@ arcpy.AddMessage("... CPCAD, Select by attribute: {}".format(where))
 x = arcpy.management.SelectLayerByAttribute(cpcad_lyr, "NEW_SELECTION", where)
 
 # Merg (has overlap)
-arcpy.AddMessage("... Merging CPCAD and NCC")
+print("... Merging CPCAD and NCC")
 m = arcpy.management.Merge([x, ncc], "memory/m")
 
 # A FASTER APPROACH TO SELECT BY LOCATION? (I tried this approach for fun)------
