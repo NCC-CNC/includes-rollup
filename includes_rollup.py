@@ -56,7 +56,10 @@ x = arcpy.management.SelectLayerByAttribute(cpcad_lyr, "NEW_SELECTION", where)
 
 # Merg (has overlap)
 print("... Merging CPCAD and NCC")
-m = arcpy.management.Merge([x, ncc], "memory/m")
+m = arcpy.management.Merge([x, ncc], "{}/CPCAD_NCC_FS_CA_MERGE_HAS_OVERLAP".format(fgdb))
+
+# Dissolve for area calculations
+d = arcpy.management.Dissolve(m, "{}/CPCAD_NCC_FS_CA_DISSOLVED".format(fgdb), multi_part = "SINGLE_PART")
 
 # A FASTER APPROACH TO SELECT BY LOCATION? (I tried this approach for fun)------
 # Add new burn field
